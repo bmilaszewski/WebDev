@@ -1,0 +1,140 @@
+<!DOCTYPE login.html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login</title>
+    <style>
+        body {
+            background-color: ivory;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            position: relative; /* Added relative positioning */
+        }
+        .header {
+            background-color: #cc0000; /* Updated color */
+            height: 140px; /* Increased height */
+            text-align: center;
+            color: white;
+            line-height: 120px; /* Center text vertically */
+            font-size: 28px; /* Increased font size */
+            position: relative; /* Added relative positioning */
+        }
+        .container {
+            max-width: 600px;
+            margin: 50px auto; /* Center container vertically */
+            padding: 45px 20px; /* Adjusted padding */
+            position: relative; /* Added relative positioning */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0; /* Remove default margin */
+        }
+        .form-group {
+            margin-bottom: 20px;
+            text-align: center; /* Center content horizontally */
+        }
+        .home-button {
+            position: absolute;
+            bottom: 35px;
+            right: 130px;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 20px;
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+            text-align: left; /* Align label text to left */
+        }
+        input[type="text"],
+        input[type="password"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box; /* Include padding and border in width calculation */
+        }
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        input[type="submit"]:hover {
+            background-color: #0056b3;
+        }
+        .error-message {
+            color: red;
+            text-align: center;
+            margin-top: 10px;
+            position: absolute; /* Position absolutely */
+            bottom: 0; /* Position at the bottom */
+            left: 0; /* Align with the left edge of the container */
+            width: 100%; /* Occupy full width of the container */
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Adjust size as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+        .create-account-button {
+            text-align: center; /* Center button horizontally */
+            margin-top: 20px; /* Add space between login form and button */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with large red bar -->
+<div class="header">
+    Welcome to the Clark University Teaching Assistant Hub
+    <a class="home-button" href="{% url 'home' %}">Home</a>
+</div>
+
+<img class="logo" src="/media/clark.png" alt="Clark Logo">
+
+<div class="container">
+  <form method="post" action="{% url 'login' %}">
+      {% csrf_token %}
+      <h1>Login</h1>
+      <div class="form-group">
+          <label for="username">Username:</label>
+          <input type="text" id="username" name="username" required autocomplete="new-username">
+      </div>
+      <div class="form-group">
+          <label for="password">Password:</label>
+          <input type="password" id="password" name="password" required autocomplete="new-password">
+      </div>
+      <input type="submit" value="Login">
+  </form>
+  {% if error_message %}
+      <p class="error-message">{{ error_message }}</p>
+  {% endif %}
+  <div class="create-account-button">
+    <a href="{% url 'createUser' %}">Don't have an account? Create one here</a>
+  </div>
+</div>
+{% if user.is_authenticated and user.is_superuser %}
+  {% if not request.GET.next %}
+      <script>
+          window.location.href = "{% url 'adminHome' %}";
+      </script>
+  {% endif %}
+{% endif %}
+
+</body>
+</html>

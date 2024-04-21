@@ -1,0 +1,187 @@
+<!DOCTYPE adminHome.html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teaching Assistants</title>
+    <style>
+        body {
+            background-color: ivory;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #cc0000;
+            height: 140px;
+            text-align: center;
+            color: white;
+            line-height: 120px;
+            font-size: 28px;
+            position: relative;
+        }
+        .logout-button {
+            position: absolute;
+            bottom: 35px;
+            right: 20px;
+            color: #007bff;
+            cursor: pointer;
+            font-size: 20px;
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+        .edit-button {
+            position: absolute;
+            bottom: 35px;
+            right: 150px; /* Adjust position as needed */
+            color: #007bff;
+            cursor: pointer;
+            font-size: 20px;
+            text-decoration: underline;
+            opacity: 0.7;
+        }
+        .container {
+            max-width: 90%;
+            margin: 25px auto 5% auto;
+            padding: 45px 20px;
+            position: relative;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+            overflow-x: auto; /* Add horizontal scrollbar if needed */
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0;
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            table-layout: fixed; /* Fixed table layout */
+        }
+        th, td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+            position: relative;
+            overflow: hidden; /* Hide overflow content */
+            text-overflow: ellipsis; /* Show ellipsis for overflow text */
+        }
+        th {
+            background-color: #f2f2f2;
+            text-align: left;
+            white-space: nowrap;
+            font-size: 14px; /* Adjust font size for column headers */
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+        .search-input {
+            width: 80px; /* Adjust width of search input */
+            padding: 5px; /* Adjust padding */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .search-label {
+            margin-right: 5px;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px;
+            height: auto;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    Welcome to the Clark University Teaching Assistant Hub
+    <a class="logout-button" href="{% url 'home' %}">Logout</a>
+    <a class="edit-button" href="{% url 'hours' %}">Add/Remove Office Hours</a>
+</div>
+<img class="logo" src="/media/clark.png" alt="Clark Logo">
+
+<div class="container">
+    <h1>Teaching Assistants</h1>
+    <table>
+        <tr>
+            <th>
+                <div class="search-container">
+                    <label for="search-name" class="search-label">Name</label>
+                    <input type="text" class="search-input" id="search-name" onkeyup="filterColumn(0)" placeholder="Search...">
+                </div>
+            </th>
+            <th>
+                <div class="search-container">
+                    <label for="search-hours" class="search-label">Hours</label>
+                    <input type="text" class="search-input" id="search-hours" onkeyup="filterColumn(1)" placeholder="Search...">
+                </div>
+            </th>
+            <th>
+                <div class="search-container">
+                    <label for="search-room" class="search-label">Room</label>
+                    <input type="text" class="search-input" id="search-room" onkeyup="filterColumn(2)" placeholder="Search...">
+                </div>
+            </th>
+            <th>
+                <div class="search-container">
+                    <label for="search-class" class="search-label">Class</label>
+                    <input type="text" class="search-input" id="search-class" onkeyup="filterColumn(3)" placeholder="Search...">
+                </div>
+            </th>
+        </tr>
+        {% for teaching_assistant in teaching_assistants %}
+        <tr>
+            <td>{{ teaching_assistant.name }}</td>
+            <td>{{ teaching_assistant.hours_of_operation }}</td>
+            <td>{{ teaching_assistant.room_number }}</td>
+            <td>{{ teaching_assistant.class_name }}</td>
+        </tr>
+        {% endfor %}
+    </table>
+</div>
+
+<script>
+    function filterColumn(columnIndex) {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search-" + getColumnId(columnIndex));
+        filter = input.value.toUpperCase();
+        table = document.getElementsByTagName("table")[0];
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) {
+            td = tr[i].getElementsByTagName("td")[columnIndex];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+
+    function getColumnId(columnIndex) {
+        switch (columnIndex) {
+            case 0:
+                return "name";
+            case 1:
+                return "hours";
+            case 2:
+                return "room";
+            case 3:
+                return "class";
+            default:
+                return "";
+        }
+    }
+</script>
+
+</body>
+</html>

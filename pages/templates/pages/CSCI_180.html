@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Class Help Form</title>
+    <style>
+        body {
+            background-color: ivory;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+        .header {
+            background-color: #cc0000; /* Updated color */
+            height: 140px; /* Increased height */
+            text-align: center;
+            color: white;
+            line-height: 120px; /* Center text vertically */
+            font-size: 28px; /* Increased font size */
+        }
+        .container {
+            max-width: 90%; /* Fill all but 5% of left and right margins */
+            margin: 25px auto 5% auto; /* 0 top margin, auto left and right margins, 5% bottom margin */
+            padding: 45px 20px; /* Adjusted padding to accommodate error message */
+            position: relative; /* Added relative positioning */
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            background-color: #fff;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h1 {
+            text-align: center;
+            margin-top: 0; /* Remove default margin */
+        }
+        table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        th {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: left;
+        }
+        td {
+            border: 1px solid #ccc;
+            padding: 10px;
+            text-align: center;
+        }
+        th {
+            background-color: #f2f2f2;
+            position: relative;
+        }
+        .search-container {
+            display: flex;
+            align-items: center;
+            justify-content: flex-end;
+        }
+        .search-input {
+            width: 100%;
+            padding: 8px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        .search-label {
+            margin-right: 5px;
+        }
+        .logo {
+            position: absolute;
+            top: 20px;
+            left: 20px;
+            width: 100px; /* Adjust size as needed */
+            height: auto; /* Maintain aspect ratio */
+        }
+    </style>
+</head>
+<body>
+
+<!-- Header with large red bar -->
+<div class="header">
+  Welcome to the Clark University Teaching Assistant Hub
+</div>
+
+<img class="logo" src="/media/clark.png" alt="Clark Logo">
+
+<div class="container">
+    <h1>Search Options For CSCI180</h1> <!-- Changed header -->
+    <table>
+        <tr>
+            <th>
+                Teaching Assistant
+                <div class="search-container">
+                    <label for="search1" class="search-label">Search:</label>
+                    <input type="text" class="search-input" id="search1" onkeyup="filterColumn(0)" placeholder="Search...">
+                </div>
+            </th>
+            <th>
+                Hours of Operation
+                <div class="search-container">
+                    <label for="search2" class="search-label">Search:</label>
+                    <input type="text" class="search-input" id="search2" onkeyup="filterColumn(1)" placeholder="Search...">
+                </div>
+            </th>
+            <th>
+                Room Number
+                <div class="search-container">
+                    <label for="search3" class="search-label">Search:</label>
+                    <input type="text" class="search-input" id="search3" onkeyup="filterColumn(2)" placeholder="Search...">
+                </div>
+            </th>
+        </tr>
+        <tr>
+            <td>John Doe</td>
+            <td>Monday-Friday, 9am-5pm</td>
+            <td>Room 101</td>
+        </tr>
+        <tr>
+            <td>Jane Smith</td>
+            <td>Monday-Thursday, 10am-4pm</td>
+            <td>Room 102</td>
+        </tr>
+        <tr>
+            <td>Michael Johnson</td>
+            <td>Monday-Friday, 8am-6pm</td>
+            <td>Room 103</td>
+        </tr>
+    </table>
+</div>
+
+<script>
+    function filterColumn(columnIndex) {
+        var input, filter, table, tr, td, i, txtValue;
+        input = document.getElementById("search" + (columnIndex + 1));
+        filter = input.value.toUpperCase();
+        table = document.getElementsByTagName("table")[0];
+        tr = table.getElementsByTagName("tr");
+        for (i = 1; i < tr.length; i++) { // Start from index 1 to skip header row
+            td = tr[i].getElementsByTagName("td")[columnIndex];
+            if (td) {
+                txtValue = td.textContent || td.innerText;
+                if (txtValue.toUpperCase().indexOf(filter) > -1) {
+                    tr[i].style.display = "";
+                } else {
+                    tr[i].style.display = "none";
+                }
+            }
+        }
+    }
+</script>
+
+</body>
+</html>

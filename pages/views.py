@@ -11,7 +11,8 @@ from .models import TeachingAssistant
 import json
 from django.http import JsonResponse
 from django.views.decorators.csrf import csrf_exempt
-
+from .forms import HoursForm
+from django.http import HttpResponseRedirect
 
 def home(request):
     teaching_assistants = TeachingAssistant.objects.all()
@@ -70,6 +71,18 @@ def hours(request):
     teaching_assistants = TeachingAssistant.objects.all()
     return render(request, 'pages/hours.html', {'teaching_assistants': teaching_assistants})
 
+def addHours(request):
+    submitted = False
+    if request.method == "POST":
+        form = HoursForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return HttpResponseRedirect('/addHours?submitted=True')
+    else: 
+        form = HoursForm
+        if 'submitted' in request.GET: 
+            submitted = True
+    return render(request, 'pages/addHours.html', {'form' : form, 'submitted': submitted})
 
 
 def delete_teaching_assistant(request, pk):

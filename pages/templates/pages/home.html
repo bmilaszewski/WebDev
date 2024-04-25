@@ -1,21 +1,28 @@
 <!DOCTYPE home.html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
     <title>Teaching Assistants</title>
     <style>
         body {
-            background-color: ivory;
-            font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/school.jpeg' %}");
+            /* Adjust background image properties */
+            background-size: cover;
+            background-position: center;
+            font-family: Crimson Text,Source Serif Pro,serif
             margin: 0;
             padding: 0;
         }
         .header {
-            background-color: #cc0000;
+            background-color: rgba(255, 255, 255, 0.8);
             height: 140px;
             text-align: center;
-            color: white;
+            color: #333;
+            font-weight: 600;
             line-height: 120px;
             font-size: 28px;
             position: relative;
@@ -24,20 +31,18 @@
             position: absolute;
             bottom: 35px;
             right: 20px;
-            color: #007bff;
+            color: #black;
             cursor: pointer;
             font-size: 20px;
-            text-decoration: underline;
             opacity: 0.7;
         }
         .create-user-button {
             position: absolute;
             bottom: 35px;
             right: 130px;
-            color: #007bff;
+            color: #black;
             cursor: pointer;
             font-size: 20px;
-            text-decoration: underline;
             opacity: 0.7;
         }
         .container {
@@ -47,13 +52,14 @@
             position: relative;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #fff;
+            background-color: rgba(255, 255, 255, 0.8);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow-x: auto; /* Add horizontal scrollbar if needed */
         }
         h1 {
             text-align: center;
             margin-top: 0;
+            color: #333;
         }
         table {
             width: 100%;
@@ -69,10 +75,13 @@
             text-overflow: ellipsis; /* Show ellipsis for overflow text */
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #cf2e2e;
             text-align: left;
             white-space: nowrap;
-            font-size: 14px; /* Adjust font size for column headers */
+            font-size: 15px; /* Adjust font size for column headers */
+        }
+        td {
+            color: #333;
         }
         .search-container {
             display: flex;
@@ -80,7 +89,7 @@
             justify-content: space-between;
         }
         .search-input {
-            width: 80px; /* Adjust width of search input */
+            width: 100px; /* Adjust width of search input */
             padding: 5px; /* Adjust padding */
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -88,6 +97,7 @@
         }
         .search-label {
             margin-right: 5px;
+            font-size: 20px;
         }
         .logo {
             position: absolute;
@@ -102,8 +112,9 @@
 
 <div class="header">
     Welcome to the Clark University Teaching Assistant Hub
-    <a class="login-button" href="{% url 'login' %}">Login</a>
-    <a class="create-user-button" href="{% url 'createUser' %}">Create User</a>
+    
+    <a class="btn btn-outline-primary login-button" href="{% url 'login' %}">Login</a>
+    <a class="btn btn-outline-primary create-user-button" href="{% url 'createUser' %}">Create User</a>
 </div>
 
 <img class="logo" src="/media/clark.png" alt="Clark Logo">

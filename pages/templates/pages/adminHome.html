@@ -1,21 +1,36 @@
 <!DOCTYPE adminHome.html>
+{% load static %}
+
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+
     <title>Teaching Assistants</title>
     <style>
         body {
-            background-color: ivory;
-            font-family: Arial, sans-serif;
+            background-image: url("{% static 'images/school.jpeg' %}");
+
+            /* Create a semi-transparent dark overlay */
+            background: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url("{% static 'images/school.jpeg' %}");
+        
+            /* Ensure the background image covers the element */
+            background-size: cover;
+        
+            /* Center the background image */
+            background-position: center;            
+            font-family: Crimson Text,Source Serif Pro,serif
             margin: 0;
             padding: 0;
+            position: relative; /* Added relative positioning */
         }
         .header {
-            background-color: #cc0000;
+            background-color: rgba(207,46,46, 0.7);
             height: 140px;
             text-align: center;
-            color: white;
+            color: #fff;
+            font-weight: 600;
             line-height: 120px;
             font-size: 28px;
             position: relative;
@@ -24,20 +39,27 @@
             position: absolute;
             bottom: 35px;
             right: 20px;
-            color: #007bff;
+            color: #fff;
             cursor: pointer;
             font-size: 20px;
-            text-decoration: underline;
             opacity: 0.7;
         }
-        .edit-button {
+        .remove-button {
             position: absolute;
             bottom: 35px;
             right: 150px; /* Adjust position as needed */
-            color: #007bff;
+            color: #fff;
             cursor: pointer;
             font-size: 20px;
-            text-decoration: underline;
+            opacity: 0.7;
+        }
+        .add-button {
+            position: absolute;
+            bottom: 35px;
+            right: 280px; /* Adjust position as needed */
+            color: #fff;
+            cursor: pointer;
+            font-size: 20px;
             opacity: 0.7;
         }
         .container {
@@ -47,7 +69,7 @@
             position: relative;
             border: 1px solid #ccc;
             border-radius: 5px;
-            background-color: #fff;
+            background-color: rgba(50, 50, 50, 0.5);
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             overflow-x: auto; /* Add horizontal scrollbar if needed */
         }
@@ -69,7 +91,7 @@
             text-overflow: ellipsis; /* Show ellipsis for overflow text */
         }
         th {
-            background-color: #f2f2f2;
+            background-color: #cf2e2e;
             text-align: left;
             white-space: nowrap;
             font-size: 14px; /* Adjust font size for column headers */
@@ -101,9 +123,12 @@
 <body>
 
 <div class="header">
-    Welcome to the Clark University Teaching Assistant Hub
-    <a class="logout-button" href="{% url 'home' %}">Logout</a>
-    <a class="edit-button" href="{% url 'hours' %}">Add/Remove Office Hours</a>
+    Clark University Teaching Assistant Hub
+    
+    <a class="btn btn-outline-light logout-button" href="{% url 'home' %}">Logout</a>
+    <a class="btn btn-outline-light add-button" href="{% url 'addHours' %}">Add</a>
+    <a class="btn btn-outline-light remove-button" href="{% url 'hours' %}">Remove</a>
+
 </div>
 <img class="logo" src="/media/clark.png" alt="Clark Logo">
 
